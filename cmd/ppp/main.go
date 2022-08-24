@@ -8,7 +8,23 @@ import (
 	ethpb "github.com/prysmaticlabs/prysm/v3/proto/prysm/v1alpha1"
 )
 
+type NodeParam struct {
+	Name               string
+	From               int
+	To                 int
+	NumberOfValidators int
+}
+
 func main() {
+
+	var nodeParams []NodeParam = []NodeParam{
+		{"batch1", 30000, 31999, 2000},
+		{"batch2", 32000, 33999, 2000},
+		{"batch3", 34000, 35999, 2000},
+		{"batch4", 36000, 37999, 2000},
+		{"batch5", 38000, 39999, 2000},
+	}
+
 	host := parseHostFromCommandLineArgs()
 	client, err := beacon.NewClient(host)
 	if err != nil {
@@ -28,12 +44,20 @@ func main() {
 	var TIMELY_TARGET byte = 1 << 1
 	var TIMELY_HEAD byte = 1 << 2
 
-	sourceByKey := map[int]int{}
-	targetByKey := map[int]int{}
-	headByKey := map[int]int{}
+	sourceByKey := map[string]int{}
+	targetByKey := map[string]int{}
+	headByKey := map[string]int{}
 
 	for i, attestation := range state.PreviousEpochParticipation {
-		key := i - (i % 1000)
+		key := ""
+		for _, nodeParam := range nodeParams {
+			if i >= nodeParam.From && i <= nodeParam.To {
+				key = nodeParam.Name
+			}
+		}
+		if key == "" {
+			continue
+		}
 
 		if attestation&TIMELY_SOURCE == TIMELY_SOURCE {
 			if _, ok := sourceByKey[key]; !ok {
@@ -60,21 +84,10 @@ func main() {
 		}
 
 	}
-	fmt.Println("indexes, source, target, head")
+	fmt.Println("participated in the previous epoch")
+	fmt.Println("node, source, target, head")
 
-	for i := 0; i < len(state.PreviousEpochParticipation); i += 1000 {
-		s := 0
-		if v, ok := sourceByKey[i]; ok {
-			s = v
-		}
-		t := 0
-		if v, ok := targetByKey[i]; ok {
-			t = v
-		}
-		h := 0
-		if v, ok := headByKey[i]; ok {
-			h = v
-		}
-		fmt.Printf("%d, %d, %d, %d\n", i, s, t, h)
+	for _, nodeParam := range nodeParams {
+		fmt.Printf("%s(%d), %d, %d, %d\n", nodeParam.Name, nodeParam.NumberOfValidators, sourceByKey[nodeParam.Name], targetByKey[nodeParam.Name], headByKey[nodeParam.Name])
 	}
 }
