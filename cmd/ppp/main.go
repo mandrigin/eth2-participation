@@ -9,10 +9,7 @@ import (
 )
 
 func main() {
-	host, err := parseHostFromCommandLineArgs("localhost:4000")
-	if err != nil {
-		panic(err)
-	}
+	host := parseHostFromCommandLineArgs()
 	client, err := beacon.NewClient(host)
 	if err != nil {
 		panic(err)
@@ -80,8 +77,4 @@ func main() {
 		}
 		fmt.Printf("%d, %d, %d, %d\n", i, s, t, h)
 	}
-}
-
-func parseHostFromCommandLineArgs(defaultHost string) (string, error) {
-	return defaultHost, nil
 }
