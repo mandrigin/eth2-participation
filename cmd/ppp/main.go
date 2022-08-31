@@ -18,10 +18,10 @@ type NodeParam struct {
 func main() {
 
 	var nodeParams []NodeParam = []NodeParam{
-		{"batch1", 30000, 31999, 2000},
+		{"batch1-DEAD", 30000, 31999, 2000},
 		{"batch2", 32000, 33999, 2000},
 		{"batch3", 34000, 35999, 2000},
-		{"batch4", 36000, 37999, 2000},
+		{"batch1+4", 36000, 37999, 2000},
 		{"batch5", 38000, 39999, 2000},
 	}
 
