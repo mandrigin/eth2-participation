@@ -15,6 +15,8 @@ import numpy as np
 def stats(arr):
     if len(arr) == 0:
         return "empty array"
+    aa = np.average(arr)
+    print("avg value of arr : ", aa)
     pp = np.percentile(arr, 50)
     print("50th percentile of arr : ", pp)
     if pp > 0 :
