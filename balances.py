@@ -45,7 +45,9 @@ response_json = response.json()
 
 
 
-def print_stats(f, t, name):
+negative_indices = []
+
+def print_stats(f, t, name, write_negative_raw = False):
     print("---")
     print(name)
     print("---")
@@ -55,6 +57,7 @@ def print_stats(f, t, name):
     validators_positive = []
     validators_positive_balances = []
     all_balances = []
+
 
     for node in response_json['data']:
         idx = int(node['index'])
@@ -68,6 +71,10 @@ def print_stats(f, t, name):
             if balance_diff < 0:
                 validators_negative.append(idx)
                 validators_negative_balances.append(balance_diff)
+
+                if write_negative_raw:
+                    negative_indices.append(idx)
+
             else:
                 validators_positive.append(idx)
                 validators_positive_balances.append(balance_diff)
@@ -83,8 +90,11 @@ def print_stats(f, t, name):
     print ("ALL BALANCES")
     stats(all_balances)
 
-print_stats(0, 10000, "TOTAL")
+print_stats(0, 6000, "TOTAL")
 print_stats(0, 2000, "Nethermind")
-print_stats(2000, 4000, "Gateway")
+print_stats(2000, 4000, "Gateway", write_negative_raw = True)
 print_stats(4000, 6000, "Gnosis")
+
+print("NEGATIVE INDICES")
+print(negative_indices)
 
