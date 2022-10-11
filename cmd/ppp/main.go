@@ -18,11 +18,11 @@ type NodeParam struct {
 func main() {
 
 	var nodeParams []NodeParam = []NodeParam{
-		{"batch1", 3000, 3599, 600},
-		{"batch2", 3600, 4199, 600},
-		{"batch3", 4200, 4799, 600},
-		{"batch4", 4800, 5399, 600},
-		{"batch5", 5400, 5999, 600},
+		{"batch1", 2000, 2399, 400},
+		{"batch2", 2400, 2799, 400},
+		{"batch3", 2800, 3199, 400},
+		{"batch4", 3200, 3599, 400},
+		{"batch5", 3600, 3999, 400},
 	}
 
 	host := parseHostFromCommandLineArgs()
