@@ -92,8 +92,8 @@ def print_stats(f, t, name, write_negative_raw = False):
 
 print_stats(0, 6000, "TOTAL")
 print_stats(0, 2000, "Nethermind")
-print_stats(2000, 4000, "Gateway", write_negative_raw = True)
-print_stats(4000, 6000, "Gnosis")
+print_stats(2000, 4000, "Gnosis")
+print_stats(4000, 6000, "Gateway", write_negative_raw = True)
 
 print("NEGATIVE INDICES")
 print(negative_indices)
