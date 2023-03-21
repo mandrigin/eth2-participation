@@ -27,6 +27,8 @@ def stats(arr):
     else:
         print("99th percentile of arr: ",
                np.percentile(arr, 1))
+    mm = np.min(arr)
+    print("min value of arr : ", mm)
 
 INITIAL_BALANCE = 32000000000
 
@@ -46,6 +48,7 @@ response_json = response.json()
 
 
 negative_indices = []
+endangered = []
 
 def print_stats(f, t, name, write_negative_raw = False):
     print("---")
@@ -78,6 +81,9 @@ def print_stats(f, t, name, write_negative_raw = False):
             else:
                 validators_positive.append(idx)
                 validators_positive_balances.append(balance_diff)
+            
+            if balance < 17000000000:
+                endangered.append(idx)
 
 
     positive = len(validators_positive)
@@ -90,11 +96,13 @@ def print_stats(f, t, name, write_negative_raw = False):
     print ("ALL BALANCES")
     stats(all_balances)
 
-print_stats(0, 6000, "TOTAL")
-print_stats(0, 2000, "Nethermind")
-print_stats(2000, 4000, "Gnosis")
-print_stats(4000, 6000, "Gateway", write_negative_raw = True)
+print_stats(0, 10000, "TOTAL")
+print_stats(0, 2500, "Neth", write_negative_raw = True)
+print_stats(2500, 7500, "Gateway", write_negative_raw = True)
+print_stats(7500, 10000, "Gnosis", write_negative_raw = True)
 
 print("NEGATIVE INDICES")
 print(negative_indices)
 
+print("ENDANGERED")
+print(endangered)
